@@ -1,0 +1,10 @@
+
+**Start the Laravel Development Server**
+Run the following commands to start the server:
+-> php artisan serve
+-> npm run dev
+
+**Admin Login**
+-> admin@gmail.com
+-> admin123
+
