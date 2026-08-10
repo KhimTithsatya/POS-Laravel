@@ -17,7 +17,7 @@ class ProductController extends Controller
         $products = Product::when(request('searchKey'),function($query){
                             $query->whereAny(['name','price','count'],'like','%'.request('searchKey').'%');
                             })
-                            ->paginate(3);
+                            ->paginate(10)->withQueryString();
 
         return view('admin.product.list',compact('products'));
     }
@@ -111,10 +111,10 @@ class ProductController extends Controller
 
     //create | update validation check
     private function validationCheck($request,$action){
-//  dd($request->all());
-        // if (!$request->has('productID')) {
-        //     dd('Error: productID not found in request'); // Debugging
-        // }
+        dd($request->all());
+                if (!$request->has('productID')) {
+                    dd('Error: productID not found in request'); // Debugging
+                }
 
 
         $rules = [

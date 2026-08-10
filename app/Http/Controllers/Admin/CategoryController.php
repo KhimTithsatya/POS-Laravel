@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     //category list page
     public function list(){
-        $data = Category::orderBy('id')->paginate(3);
+        $data = Category::orderBy('id')->paginate(10)->withQueryString();
         return view('admin.category.list', compact('data'));
     }
     
