@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            <form action="{{ route('product#Create') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('productCreate') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <div class="row">
