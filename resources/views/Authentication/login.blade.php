@@ -26,13 +26,24 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user @error('password') is-invalid @enderror" placeholder="Password" name="password" value="{{old ('password')}}">
-                                        @error('password')
-                                            <small class="invalid-feedback">{{ $message }}</small>
-                                        @enderror
-                                    </div>
+                                    <input type="password"
+                                        class="form-control form-control-user @error('password') is-invalid @enderror"
+                                        placeholder="Password"
+                                        name="password">
+
+                                    @error('password')
+                                        <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
+                                </div>
+
+                                <div class="text-end mb-3">
+                                    <a href="{{ route('password.request') }}" class="small text-primary">
+                                        Forgot Password?
+                                    </a>
+                                </div>
 
                                     <input type="submit" value="Login" class="btn btn-primary btn-user btn-block">
+
 
                                     <hr>
                                    <div class="row">
