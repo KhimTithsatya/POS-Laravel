@@ -258,7 +258,7 @@
                                         style="top: 10px; right: 10px;">{{ $item->category_name }}</div>
                                     <div class="p-4 pb-0 rounded-bottom">
                                         <h4 class="text-white">{{ $item->name }}</h4>
-                                        <p class="text-white fs-5 fw-bold">{{ $item->price }} MMK</p>
+                                        <p class="text-white fs-5 fw-bold">{{ $item->price }} $</p>
                                         <p>{{ Str::words($item->description, 10, '...') }}</p>
                                         <div class="d-flex justify-content-between flex-lg-wrap">
 
