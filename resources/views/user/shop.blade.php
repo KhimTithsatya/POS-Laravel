@@ -23,8 +23,7 @@
                                 <div class="input-group w-100 mx-auto d-flex">
                                     <input type="search" class="form-control p-3" value="{{ request('searchKey') }}"
                                         name="searchKey" placeholder="keywords">
-                                    <button type="submit" class="input-group-text p-3"><i
-                                            class="fa fa-search"></i></button>
+                                    <button type="submit" class="input-group-text p-3"><i class="fa-solid fa-magnifying-glass" style="color: rgb(11, 89, 227);"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -38,7 +37,7 @@
                                             <ul class="text-white list-unstyled products-categorie">
                                                 <li>
                                                     <div class="d-flex justify-content-between products-name ">
-                                                        <a href="{{ route('shopList') }}"><i class="fa-solid fa-clover"></i>
+                                                        <a href="{{ route('shopList') }}"><i class="fa-solid fa-layer-group"></i>
                                                             All Categories</a>
                                                     </div>
                                                 </li>
