@@ -1,7 +1,31 @@
+# -------------------------
+# Stage 1: Build frontend
+# -------------------------
+FROM node:20-alpine AS frontend
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY resources ./resources
+COPY public ./public
+COPY vite.config.* ./
+COPY postcss.config.* ./
+COPY tailwind.config.* ./
+COPY --from=frontend /app/public/build ./public/build
+
+RUN npm run build
+
+
+# -------------------------
+# Stage 2: Laravel
+# -------------------------
 FROM php:8.4-fpm
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
+    nginx \
     git \
     curl \
     unzip \
@@ -9,7 +33,6 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
     libzip-dev \
-    nginx \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
         pdo_mysql \
@@ -25,10 +48,9 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /var/www
 
-# Copy Laravel project
+# Copy Laravel application
 COPY . .
 
 # Install PHP dependencies
@@ -37,18 +59,18 @@ RUN composer install \
     --optimize-autoloader \
     --no-interaction
 
-# Laravel permissions
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+# Copy built Vite assets
+COPY --from=frontend /app/public/build ./public/build
 
-# Laravel production settings
-RUN php artisan config:clear
-RUN php artisan route:clear
-RUN php artisan view:clear
+# Permissions
+RUN chown -R www-data:www-data \
+    /var/www/storage \
+    /var/www/bootstrap/cache
 
 # Nginx configuration
 COPY docker/nginx/default.conf /etc/nginx/sites-available/default
 
-# Create startup script
+# Startup script
 RUN printf '#!/bin/sh\n\
 php artisan migrate --force\n\
 php artisan storage:link || true\n\
